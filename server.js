@@ -2,6 +2,7 @@ const http = require('http');
 const moment = require('moment');
 const generatePdf = require('./generatePDF');
 const PORT = process.env.PORT || 5000;
+const fs = require('fs');
 
 const server = http.createServer(async (req, res) => {
 
@@ -10,7 +11,7 @@ const server = http.createServer(async (req, res) => {
     switch (parsedUrl.pathname) {
         case "/generate":
             
-            let missedFields = ["firstname","lastname","birthday","birthplace","adress","zipcode","city","reasons"].filter(field => !parsedUrl.query[field]);
+            let missedFields = ["firstname","lastname","birthday","birthplace","address","zipcode","city","reasons"].filter(field => !parsedUrl.query[field]);
                 if (missedFields[0]) {
                     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
                     res.write("<p>Données insuffisantes, veuillez passer par le <a href=\"./\">générateur de lien</a></p>");
@@ -34,8 +35,8 @@ const server = http.createServer(async (req, res) => {
             break;
             
         default:
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.write("Soon");
+            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.write(await fs.readFileSync('./Resources/link-generator.html'));
             res.end();
             break;
     }

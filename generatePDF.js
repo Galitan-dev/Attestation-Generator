@@ -21,7 +21,7 @@ const reasonYs = {
 
 /**
  * @typedef profil
- * @type {{ firstname: String, lastname: String, birthday: String, birthplace: String, adress: String, zipcode: String, city: String, reasons: reason[], date: String, hour: String }}
+ * @type {{ firstname: String, lastname: String, birthday: String, birthplace: String, address: String, zipcode: String, city: String, reasons: reason[], date: String, hour: String }}
  */
 
 /**
@@ -38,7 +38,7 @@ async function generatePdf (profil) {
     page1.drawText(text, { x, y, size: 11, font: font });
   }
 
-  var { firstname, lastname, birthday, birthplace, adress, zipcode, city, reasons, date, hour } = profil;
+  var { firstname, lastname, birthday, birthplace, address, zipcode, city, reasons, date, hour } = profil;
 
   drawText(`${firstname} ${lastname}`, 109, 657);
   drawText(birthday, 108, 627);
