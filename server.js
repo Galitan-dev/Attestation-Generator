@@ -8,7 +8,7 @@ const server = http.createServer(async (req, res) => {
     let parsedUrl = parse(req.url);
 
     switch (parsedUrl.pathname) {
-        case "/attestation":
+        case "/generate":
             
             let missedFields = ["firstname","lastname","birthday","birthplace","adress","zipcode","city","reasons"].filter(field => !parsedUrl.query[field]);
                 if (missedFields[0]) {
