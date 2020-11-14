@@ -154,6 +154,7 @@
 
         function generate() {
             let reasons = ["travail","achats","sante","famille","handicap","sport_animaux","convocation","missions","enfants"].filter(r =>document.querySelector("#checkbox-" + r).checked);
+            if (reasons.length < 1) return alert("Veuillez choisir au moins un motif !")
             let link = `http://attestation.cleverapps.io/generate?${val('firstname')}&${val('lastname')}&${val('birthday')}&${val('birthplace')}&${val('address')}&${val('city')}&${val('zipcode')}&reasons=${reasons.join(',')}`;
             result.innerHTML = link;
             result.href = link;
