@@ -1,0 +1,19 @@
+{
+  "name": "attestation-generator",
+  "version": "1.0.0",
+  "description": "Générateur d'attestation de sortie",
+  "main": "server.js",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "pdf-lib": "^1.11.2",
+    "qrcode": "^1.4.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js",
+    "start": "node server.js"
+  },
+  "author": "Galitan33",
+  "license": "ISC"
+}
