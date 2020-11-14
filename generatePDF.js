@@ -43,7 +43,7 @@ async function generatePdf (profil) {
   drawText(`${firstname} ${lastname}`, 109, 657);
   drawText(birthday, 108, 627);
   drawText(birthplace, 239, 627);
-  drawText(`${adress} ${zipcode} ${city}`, 124, 597);
+  drawText(`${address} ${zipcode} ${city}`, 124, 597);
 
   const checkMarkBuffer = await fs.readFileSync('./Resources/check-mark-icon.png');
   const checkMarkJPG = await pdfDoc.embedPng(checkMarkBuffer);
@@ -59,7 +59,7 @@ async function generatePdf (profil) {
     `Nom: ${lastname}`,
     `Prenom: ${firstname}`,
     `Naissance: ${birthday} a ${birthplace}`,
-    `Adresse: ${adress} ${zipcode} ${city}`,
+    `Adresse: ${address} ${zipcode} ${city}`,
     `Sortie: ${date} a ${hour}`,
     `Motifs: ${reasons.join(',')}`
   ].join(';\n') + ";";

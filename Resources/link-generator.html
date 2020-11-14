@@ -153,7 +153,8 @@
         function val (k) { return k + "=" + document.querySelector('#' + k).value.replace(/ /g, '%20').replace(/\//g, '%2f'); }
 
         function generate() {
-            let link = `http://attestation.cleverapps.io/generate?${val('firstname')}&${val('lastname')}&${val('birthday')}&${val('birthplace')}&${val('address')}&${val('city')}&${val('zipcode')}&reasons=sport_animaux`;
+            let reasons = ["travail","achats","sante","famille","handicap","sport_animaux","convocation","missions","enfants"].filter(r =>document.querySelector("#checkbox-" + r).checked);
+            let link = `http://attestation.cleverapps.io/generate?${val('firstname')}&${val('lastname')}&${val('birthday')}&${val('birthplace')}&${val('address')}&${val('city')}&${val('zipcode')}&reasons=${reasons.join(',')}`;
             result.innerHTML = link;
             result.href = link;
         }
