@@ -27,17 +27,19 @@ const server = http.createServer(async (req, res) => {
             profil.hour = now.format("HH[:]mm");
             profil.reasons = profil.reasons.split(',')
 
-            console.log(profil);
-
             res.writeHead(200, { 'Content-Type': 'application/pdf' });
-            res.write(await generatePdf(profil));
-            res.end();
+
+            res.end(await generatePdf(profil));
+            break;
+
+        case "/clipboard.js":
+            res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
+            res.end(await fs.readFileSync('./Resources/clipboard.min.js'));
             break;
             
         default:
             res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-            res.write(await fs.readFileSync('./Resources/link-generator.html'));
-            res.end();
+            res.end(await fs.readFileSync('./Resources/link-generator.html'));
             break;
     }
 

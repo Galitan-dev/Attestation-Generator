@@ -44,17 +44,16 @@
             font-size: x-large;
         }
 
-        .result-container {
-            border: #000 solid 1px;
-            padding: 5px;
-            border-radius: 5px;
-            opacity: 1;
-            font-size: larger;
-            word-wrap: break-word;
+        .result, .copy {
+            font-size: medium;
+        }
+
+        .result::selection {
+            outline-color: green;
         }
 
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/clipboard.js"></script>
 </head>
 <body>
     <h1>Bienvenue sur le <b>Générateur d'Attestation</b> !</h1>
@@ -146,9 +145,11 @@
         <input type="submit" value="Générer mon attestation">
     </form>
     <br>
-    <div class="result-container"><a class="result" target="blank">C'est ici qu'apparaîtra votre lien d'attestation</a></div>
+    <input type="text" class="result clipboard" readonly value='Veuillez remplir le formulaire ci-dessus puis cliquer sur "Générer mon attestation"' size="200" data-clipboard-target=".result" disabled>
+    <button class="copy clipboard" data-clipboard-target=".result" disabled>Copier</button>
     <script>
         const result = document.querySelector('.result');
+        const copy = document.querySelector('.copy');
 
         function val (k) { return k + "=" + document.querySelector('#' + k).value.replace(/ /g, '%20').replace(/\//g, '%2f'); }
 
@@ -156,9 +157,20 @@
             let reasons = ["travail","achats","sante","famille","handicap","sport_animaux","convocation","missions","enfants"].filter(r =>document.querySelector("#checkbox-" + r).checked);
             if (reasons.length < 1) return alert("Veuillez choisir au moins un motif !")
             let link = `http://attestation.cleverapps.io/generate?${val('firstname')}&${val('lastname')}&${val('birthday')}&${val('birthplace')}&${val('address')}&${val('city')}&${val('zipcode')}&reasons=${reasons.join(',')}`;
-            result.innerHTML = link;
-            result.href = link;
+            result.value = link;
+            result.disabled = false;
+            copy.disabled = false;
         }
+
+        new ClipboardJS('.clipboard');
+
+        function resize () {
+            result.size = window.innerHeight / 5;
+        }
+
+        addEventListener('resize', resize)
+
+        resize();
     </script>
 </body>
 </html>
