@@ -11,7 +11,7 @@ const server = http.createServer(async (req, res) => {
     switch (parsedUrl.pathname) {
         case "/generate":
             
-            let missedFields = ["firstname","lastname","birthday","birthplace","address","zipcode","city","reasons"].filter(field => !parsedUrl.query[field]);
+            let missedFields = ["firstname","lastname","birthday","birthplace","address","zipcode","city","reason"].filter(field => !parsedUrl.query[field]);
                 if (missedFields[0]) {
                     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
                     res.write("<p>Données insuffisantes, veuillez passer par le <a href=\"./\">générateur de lien</a></p>");
@@ -25,7 +25,6 @@ const server = http.createServer(async (req, res) => {
 
             profil.date = now.format("DD[/]MM[/]YYYY");
             profil.hour = now.format("HH[:]mm");
-            profil.reasons = profil.reasons.split(',')
 
             res.writeHead(200, { 'Content-Type': 'application/pdf' });
 
@@ -37,9 +36,19 @@ const server = http.createServer(async (req, res) => {
             res.end(await fs.readFileSync('./Resources/clipboard.min.js'));
             break;
             
+        case "/link-generator/script.js":
+            res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
+            res.end(await fs.readFileSync('./Resources/Link-Generator/script.js'));
+            break;
+
+        case "/link-generator/style.css":
+            res.writeHead(200, { 'Content-Type': 'text/css; charset=utf-8' });
+            res.end(await fs.readFileSync('./Resources/Link-Generator/style.css'));
+            break;
+
         default:
             res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-            res.end(await fs.readFileSync('./Resources/link-generator.html'));
+            res.end(await fs.readFileSync('./Resources/Link-Generator/index.html'));
             break;
     }
 

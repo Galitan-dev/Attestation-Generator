@@ -21,7 +21,7 @@ const reasonYs = {
 
 /**
  * @typedef profil
- * @type {{ firstname: String, lastname: String, birthday: String, birthplace: String, address: String, zipcode: String, city: String, reasons: reason[], date: String, hour: String }}
+ * @type {{ firstname: String, lastname: String, birthday: String, birthplace: String, address: String, zipcode: String, city: String, reason: reason, date: String, hour: String }}
  */
 
 /**
@@ -38,7 +38,7 @@ async function generatePdf (profil) {
     page1.drawText(text, { x, y, size: 11, font: font });
   }
 
-  var { firstname, lastname, birthday, birthplace, address, zipcode, city, reasons, date, hour } = profil;
+  var { firstname, lastname, birthday, birthplace, address, zipcode, city, reason, date, hour } = profil;
 
   drawText(`${firstname} ${lastname}`, 109, 657);
   drawText(birthday, 108, 627);
@@ -48,7 +48,7 @@ async function generatePdf (profil) {
   const checkMarkBuffer = await fs.readFileSync('./Resources/check-mark-icon.png');
   const checkMarkJPG = await pdfDoc.embedPng(checkMarkBuffer);
 
-  reasons.forEach(reason => page1.drawImage(checkMarkJPG,  { x: 57, y: reasonYs[reason], width: 10, height: 10 }));
+  page1.drawImage(checkMarkJPG,  { x: 57, y: reasonYs[reason], width: 10, height: 10 });
 
   drawText(city, 95, 123);
   drawText(date, 78, 93);
@@ -61,7 +61,7 @@ async function generatePdf (profil) {
     `Naissance: ${birthday} a ${birthplace}`,
     `Adresse: ${address} ${zipcode} ${city}`,
     `Sortie: ${date} a ${hour}`,
-    `Motifs: ${reasons.join(',')}`
+    `Motifs: ${reason}`
   ].join(';\n') + ";";
 
   const generatedQR = await generateQR(data);
