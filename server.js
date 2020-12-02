@@ -21,7 +21,7 @@ const server = http.createServer(async (req, res) => {
 
             /** @type {import('./generatePDF').profil} */
             let profil = parsedUrl.query,
-                now = moment();
+                now = moment().add(7, "hours");
 
             profil.date = now.format("DD[/]MM[/]YYYY");
             profil.hour = now.format("HH[:]mm");
